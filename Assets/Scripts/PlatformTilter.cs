@@ -1,5 +1,7 @@
 using UnityEngine;
 
+// This line ensures Unity automatically adds a Rigidbody if you forgot!
+[RequireComponent(typeof(Rigidbody))]
 public class PlatformTilter : MonoBehaviour
 {
     [Header("Player References")]
@@ -7,46 +9,48 @@ public class PlatformTilter : MonoBehaviour
     public Transform player2;
 
     [Header("Tilt Settings")]
-    [Tooltip("How much the platform tilts per unit of distance from the center.")]
     public float tiltSensitivity = 5f;
+    public float maxTiltAngle = 10f;
+    public float tiltSpeed = 1.5f;
 
-    [Tooltip("The maximum angle the platform can tilt in any direction.")]
-    public float maxTiltAngle = 20f;
-
-    [Tooltip("How smoothly the platform tilts (higher is faster).")]
-    public float tiltSpeed = 3f;
-
-    // The starting position of the platform's pivot
     private Vector3 pivotPosition;
+    private Rigidbody rb;
+    private Quaternion targetRotation;
 
     void Start()
     {
-        // Remember where the platform is in the world
         pivotPosition = transform.position;
+
+        // Grab the Rigidbody and ensure it is set up correctly
+        rb = GetComponent<Rigidbody>();
+        rb.isKinematic = true;
     }
 
+    // Use Update for reading inputs and calculating math
     void Update()
     {
         if (player1 == null || player2 == null) return;
 
-        // 1. Find the midpoint between the two players
         Vector3 midPoint = (player1.position + player2.position) / 2f;
 
-        // 2. Find the offset from the platform's center
-        // We only care about X and Z for the tilt (assuming Y is up)
         float offsetX = midPoint.x - pivotPosition.x;
         float offsetZ = midPoint.z - pivotPosition.z;
 
-        // 3. Calculate the target angles based on the offset
-        // X offset affects the Z axis (Roll)
-        // Z offset affects the X axis (Pitch)
         float targetPitch = Mathf.Clamp(offsetZ * tiltSensitivity, -maxTiltAngle, maxTiltAngle);
         float targetRoll = Mathf.Clamp(-offsetX * tiltSensitivity, -maxTiltAngle, maxTiltAngle);
 
-        // Create the target rotation
-        Quaternion targetRotation = Quaternion.Euler(targetPitch, 0f, targetRoll);
+        // Store the target rotation we want to reach
+        targetRotation = Quaternion.Euler(targetPitch, 0f, targetRoll);
+    }
 
-        // 4. Smoothly apply the rotation
-        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * tiltSpeed);
+    // Use FixedUpdate for applying physical movement
+    void FixedUpdate()
+    {
+        // Calculate the next step toward our target rotation
+        // Notice we use Time.fixedDeltaTime here instead of Time.deltaTime
+        Quaternion nextRotation = Quaternion.Lerp(rb.rotation, targetRotation, Time.fixedDeltaTime * tiltSpeed);
+
+        // Tell the physics engine to move the rotation, which pushes the ball properly!
+        rb.MoveRotation(nextRotation);
     }
 }
