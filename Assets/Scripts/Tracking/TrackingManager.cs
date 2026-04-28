@@ -282,16 +282,26 @@ public class TrackingManager : MonoBehaviour
         GameObject player = players[playerSelected - 1];
         if (player == null || !player.activeSelf) return;
 
-        Vector3 move = Vector3.zero;
+        GameObject player1 = players[0];
+        GameObject player2 = players[1];
+
+        Vector3 move1 = Vector3.zero;
+        Vector3 move2 = Vector3.zero;
         Keyboard kb = Keyboard.current;
         if (kb == null) return;
 
-        if (kb.wKey.isPressed) move += Vector3.forward;
-        if (kb.sKey.isPressed) move += Vector3.back;
-        if (kb.aKey.isPressed) move += Vector3.left;
-        if (kb.dKey.isPressed) move += Vector3.right;
+        if (kb.wKey.isPressed) move1 += Vector3.forward;
+        if (kb.sKey.isPressed) move1 += Vector3.back;
+        if (kb.aKey.isPressed) move1 += Vector3.left;
+        if (kb.dKey.isPressed) move1 += Vector3.right;
 
-        player.transform.Translate(move * Time.deltaTime * trackingDisabledPlayerSpeed);
+        if (kb.upArrowKey.isPressed) move2 += Vector3.forward;
+        if (kb.downArrowKey.isPressed) move2 += Vector3.back;
+        if (kb.leftArrowKey.isPressed) move2 += Vector3.left;
+        if (kb.rightArrowKey.isPressed) move2 += Vector3.right;
+
+        player1.transform.Translate(move1 * Time.deltaTime * trackingDisabledPlayerSpeed);
+        player2.transform.Translate(move2 * Time.deltaTime * trackingDisabledPlayerSpeed);
     }
 
 /// <summary>
