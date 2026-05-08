@@ -71,7 +71,14 @@ public class GameManager : MonoBehaviour
         }
 
         // Pausar el juego
-        Time.timeScale = 0f;
+        //Time.timeScale = 0f;
+
+        ResetGame();
+
+        // Colocar la bola en el Initial Point
+        //ball.transform.position = initialPoint.GetSpawnPosition();
+        //ball.transform.rotation = initialBallRotation;
+
     }
 
     public bool IsGameOver() => gameOver;
