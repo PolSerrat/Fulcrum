@@ -18,7 +18,7 @@ public class OptionsMenu : MonoBehaviour
     }
     public void LoadNormal()
     {
-        SceneManager.LoadScene("Level_Normal");
+        SceneManager.LoadScene("Normal");
     }
     public void LoadHard()
     {

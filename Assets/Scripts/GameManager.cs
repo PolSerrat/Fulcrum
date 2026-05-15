@@ -1,4 +1,6 @@
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -21,7 +23,7 @@ public class GameManager : MonoBehaviour
         }
 
         initialBallRotation = ball.transform.rotation;
-        ResetGame();
+        //ResetGame();
     }
 
     public void ResetGame()
@@ -51,6 +53,8 @@ public class GameManager : MonoBehaviour
         Debug.Log("═══════════════════════════════════");
         Debug.Log("      JUEGO INICIADO");
         Debug.Log("═══════════════════════════════════");
+
+        SceneManager.LoadScene("Menu"); // Reiniciar la escena actual
     }
 
     public void GameWon()
