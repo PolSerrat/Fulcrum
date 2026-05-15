@@ -5210,8 +5210,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   extraGravity: 100
-  maxSpeed: 50
-  speed: 20
+  maxSpeed: 25
+  speed: 10
 --- !u!114 &1733906740
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6593,7 +6593,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TrackingManager
   calibrationUI: {fileID: 1154398784}
   trackingInterface: {fileID: 1154398778}
-  enableTracking: 1
+  enableTracking: 0
   numberOfPlayers: 2
   numberOfBaseStations: 4
   enableRotation: 1
