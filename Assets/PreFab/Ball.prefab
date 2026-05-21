@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 1117496605835430194}
   - component: {fileID: 8832401323493211244}
   - component: {fileID: -3455910344989579917}
+  - component: {fileID: 7896112611017539589}
   m_Layer: 0
   m_Name: Ball
   m_TagString: Untagged
@@ -279,3 +280,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallThreshold: -50
+--- !u!114 &7896112611017539589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5037964368121278749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e69be70363e6be4eb5e16ec7b7f3d14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentLives: 3
+  crashThreshold: 5
