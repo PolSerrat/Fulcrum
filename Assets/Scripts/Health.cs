@@ -66,7 +66,7 @@ public class Health : MonoBehaviour
         }
     }
 
-    void LoseLife(float force)
+    public void LoseLife(float force)
     {
         currentLives--;
 
