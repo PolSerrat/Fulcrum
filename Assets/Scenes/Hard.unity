@@ -2169,7 +2169,11 @@ Transform:
   m_GameObject: {fileID: 676272683}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+<<<<<<< HEAD
   m_LocalPosition: {x: 31.4, y: -13.3, z: 30.6}
+=======
+  m_LocalPosition: {x: 31.16, y: -13.3, z: -25.650002}
+>>>>>>> 49fd11bfe41f33578e2e6d13245fca9bb96b57c9
   m_LocalScale: {x: 4.5, y: 5, z: 9}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2290,8 +2294,13 @@ Transform:
   m_GameObject: {fileID: 693480088}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+<<<<<<< HEAD
   m_LocalPosition: {x: 25.7, y: -11.3, z: -32.9}
   m_LocalScale: {x: 4.5, y: 8, z: 9}
+=======
+  m_LocalPosition: {x: 10.639999, y: -11.3, z: 42.5}
+  m_LocalScale: {x: 60, y: 8, z: 4.5}
+>>>>>>> 49fd11bfe41f33578e2e6d13245fca9bb96b57c9
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 446055596}
@@ -2569,9 +2578,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 731694987}
   serializedVersion: 2
+<<<<<<< HEAD
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -3.7, y: -11.3, z: 20.6}
   m_LocalScale: {x: 4.5, y: 8, z: 9}
+=======
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -17.19, y: -11.3, z: 14.800001}
+  m_LocalScale: {x: 4.5, y: 8, z: 60}
+>>>>>>> 49fd11bfe41f33578e2e6d13245fca9bb96b57c9
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 446055596}
@@ -3504,9 +3519,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1128234495}
   serializedVersion: 2
+<<<<<<< HEAD
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -21.1, y: -11.3, z: -22.3}
   m_LocalScale: {x: 4.5, y: 8, z: 40}
+=======
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 12.370001, y: -11.3, z: -14.93}
+  m_LocalScale: {x: 4.5, y: 8, z: 60}
+>>>>>>> 49fd11bfe41f33578e2e6d13245fca9bb96b57c9
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 446055596}
@@ -7809,7 +7830,7 @@ PrefabInstance:
       objectReference: {fileID: 580909887}
     - target: {fileID: 7896112611017539589, guid: 53de6df19068a0e46adcc22ae0801440, type: 3}
       propertyPath: currentLives
-      value: 5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7896112611017539589, guid: 53de6df19068a0e46adcc22ae0801440, type: 3}
       propertyPath: crashThreshold
