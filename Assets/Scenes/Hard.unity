@@ -6259,6 +6259,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d96541b8e358dc469b22f5f5a2a9bbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timeLimit: 60
   autoStart: 1
   timerText: {fileID: 172370026}
   warningThreshold: 10
@@ -7789,11 +7790,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7826975095087347067, guid: 53de6df19068a0e46adcc22ae0801440, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -6.8
       objectReference: {fileID: 0}
     - target: {fileID: 7826975095087347067, guid: 53de6df19068a0e46adcc22ae0801440, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 21.39152
       objectReference: {fileID: 0}
     - target: {fileID: 7826975095087347067, guid: 53de6df19068a0e46adcc22ae0801440, type: 3}
       propertyPath: m_LocalRotation.w
