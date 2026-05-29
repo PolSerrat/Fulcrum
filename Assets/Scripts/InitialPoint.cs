@@ -7,9 +7,9 @@ public class InitialPoint : MonoBehaviour
 
     void Start()
     {
-		// Hacer invisible el cubo de Initial Point
-		GetComponent<Renderer>().enabled = false;
-	}
+        // Hacer invisible el cubo de Initial Point
+        GetComponent<Renderer>().enabled = false;
+    }
 
     // El GameManager obtendrá la posición de este script cuando sea necesario
     public Vector3 GetSpawnPosition()
