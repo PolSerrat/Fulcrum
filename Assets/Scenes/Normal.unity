@@ -897,6 +897,7 @@ MonoBehaviour:
   backgroundMusic: {fileID: 8300000, guid: 0f43a8795be68164ea8f7d57e9d6fc1f, type: 3}
   victoryMusic: {fileID: 8300000, guid: bf4890a1c6569ed45aea8fd339f121b5, type: 3}
   defeatMusic: {fileID: 8300000, guid: 3de86e5ac64247d44895e533c0e8144d, type: 3}
+  loseLife: {fileID: 8300000, guid: ecae6d6dc2a7d1641bf95f00002673fa, type: 3}
 --- !u!4 &341879178
 Transform:
   m_ObjectHideFlags: 0
@@ -4061,7 +4062,7 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
@@ -7396,7 +7397,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: cc471bcbef4fb0340bb42889098a5db8, type: 2}
     - target: {fileID: 7826975095087347067, guid: 53de6df19068a0e46adcc22ae0801440, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.09307
+      value: 33.7
       objectReference: {fileID: 0}
     - target: {fileID: 7826975095087347067, guid: 53de6df19068a0e46adcc22ae0801440, type: 3}
       propertyPath: m_LocalPosition.y
@@ -7404,7 +7405,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7826975095087347067, guid: 53de6df19068a0e46adcc22ae0801440, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.60848
+      value: 21.4
       objectReference: {fileID: 0}
     - target: {fileID: 7826975095087347067, guid: 53de6df19068a0e46adcc22ae0801440, type: 3}
       propertyPath: m_LocalRotation.w
@@ -7440,7 +7441,7 @@ PrefabInstance:
       objectReference: {fileID: 580909887}
     - target: {fileID: 7896112611017539589, guid: 53de6df19068a0e46adcc22ae0801440, type: 3}
       propertyPath: currentLives
-      value: 5
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7896112611017539589, guid: 53de6df19068a0e46adcc22ae0801440, type: 3}
       propertyPath: crashThreshold
@@ -7497,7 +7498,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TrackingManager
   calibrationUI: {fileID: 1154398784}
   trackingInterface: {fileID: 1154398778}
-  enableTracking: 0
+  enableTracking: 1
   numberOfPlayers: 2
   numberOfBaseStations: 4
   enableRotation: 0

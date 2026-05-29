@@ -6,6 +6,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip backgroundMusic;
     public AudioClip victoryMusic;
     public AudioClip defeatMusic;
+    public AudioClip loseLife;
 
     private AudioSource musicSource;
 
@@ -69,6 +70,17 @@ public class AudioManager : MonoBehaviour
         musicSource.Play();
 
         Debug.Log("Defeat music started");
+    }
+
+    public void PlayLoseLifeSound()
+    {
+        if (loseLife == null)
+        {
+            Debug.LogWarning("Lose life sound missing");
+            return;
+        }
+        AudioSource.PlayClipAtPoint(loseLife, Camera.main.transform.position);
+        Debug.Log("Lose life sound played");
     }
 
     public void PauseMusic()

@@ -1042,6 +1042,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   backgroundMusic: {fileID: 8300000, guid: 0f43a8795be68164ea8f7d57e9d6fc1f, type: 3}
   victoryMusic: {fileID: 0}
+  defeatMusic: {fileID: 0}
+  loseLife: {fileID: 0}
 --- !u!4 &341879178
 Transform:
   m_ObjectHideFlags: 0
@@ -7563,7 +7565,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TrackingManager
   calibrationUI: {fileID: 1154398784}
   trackingInterface: {fileID: 1154398778}
-  enableTracking: 0
+  enableTracking: 1
   numberOfPlayers: 2
   numberOfBaseStations: 4
   enableRotation: 0

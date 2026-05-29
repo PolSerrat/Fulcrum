@@ -1,5 +1,5 @@
-using System.Collections;
 using UnityEngine;
+using System.Collections;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -22,6 +22,16 @@ public class GameManager : MonoBehaviour
         }
 
         initialBallRotation = ball.transform.rotation;
+    }
+
+    public void loseLife()
+    {
+        if (gameOver) return;
+        Debug.Log("¡Has perdido una vida!");
+        if (audioManager != null)
+        {
+            audioManager.PlayLoseLifeSound();
+        }
     }
 
     public void GameWon()
@@ -63,7 +73,7 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator ResetAfterDelay()
     {
-        // IMPORTANTE: usar unscaled time porque timeScale = 0
+        
         yield return new WaitForSecondsRealtime(10f);
 
         ResetGame();
@@ -91,6 +101,7 @@ public class GameManager : MonoBehaviour
             audioManager.ResumeMusic();
         }
 
+        SceneManager.LoadScene("Menu"); // Reiniciar la escena actual
         Debug.Log("Juego reiniciado");
     }
 

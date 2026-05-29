@@ -1830,7 +1830,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6cefbdc00a15464ebaf1c97c7fcad03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoubleScreenCameraManager
-  plane: {fileID: 0}
+  plane: {fileID: 446055595}
   blend: {fileID: 1453253526}
   backgroundColor: {r: 1, g: 1, b: 1, a: 0}
   percentageOfCameraOverlap: 11.03
@@ -2169,7 +2169,7 @@ Transform:
   m_GameObject: {fileID: 676272683}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 31.4, y: -13.3, z: 30.6}
+  m_LocalPosition: {x: -36, y: -13.3, z: -33.4}
   m_LocalScale: {x: 4.5, y: 5, z: 9}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4899,6 +4899,7 @@ MonoBehaviour:
   backgroundMusic: {fileID: 8300000, guid: 1bc40ce39b55fb846a165ef243c18d57, type: 3}
   victoryMusic: {fileID: 8300000, guid: bf4890a1c6569ed45aea8fd339f121b5, type: 3}
   defeatMusic: {fileID: 8300000, guid: 3de86e5ac64247d44895e533c0e8144d, type: 3}
+  loseLife: {fileID: 8300000, guid: ecae6d6dc2a7d1641bf95f00002673fa, type: 3}
 --- !u!4 &1407376856
 Transform:
   m_ObjectHideFlags: 0
@@ -6151,7 +6152,7 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
@@ -7765,7 +7766,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 7aa0c714ada1207449fed09949a1087c, type: 2}
     - target: {fileID: 7826975095087347067, guid: 53de6df19068a0e46adcc22ae0801440, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -28.09307
+      value: 29.3
       objectReference: {fileID: 0}
     - target: {fileID: 7826975095087347067, guid: 53de6df19068a0e46adcc22ae0801440, type: 3}
       propertyPath: m_LocalPosition.y
@@ -7773,7 +7774,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7826975095087347067, guid: 53de6df19068a0e46adcc22ae0801440, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -26.60848
+      value: 32.2
       objectReference: {fileID: 0}
     - target: {fileID: 7826975095087347067, guid: 53de6df19068a0e46adcc22ae0801440, type: 3}
       propertyPath: m_LocalRotation.w
@@ -7809,7 +7810,7 @@ PrefabInstance:
       objectReference: {fileID: 580909887}
     - target: {fileID: 7896112611017539589, guid: 53de6df19068a0e46adcc22ae0801440, type: 3}
       propertyPath: currentLives
-      value: 5
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7896112611017539589, guid: 53de6df19068a0e46adcc22ae0801440, type: 3}
       propertyPath: crashThreshold
@@ -7866,7 +7867,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TrackingManager
   calibrationUI: {fileID: 1154398784}
   trackingInterface: {fileID: 1154398778}
-  enableTracking: 0
+  enableTracking: 1
   numberOfPlayers: 2
   numberOfBaseStations: 4
   enableRotation: 0
