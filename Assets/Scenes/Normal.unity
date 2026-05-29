@@ -6190,7 +6190,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d96541b8e358dc469b22f5f5a2a9bbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeLimit: 60
+  timeLimit: 30
   autoStart: 1
   timerText: {fileID: 172370026}
   warningThreshold: 10
