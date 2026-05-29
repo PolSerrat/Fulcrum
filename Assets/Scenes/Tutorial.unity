@@ -151,7 +151,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initialPoint: {fileID: 1354036973}
   ball: {fileID: 1733906739}
-  audioManager: {fileID: 0}
+  audioManager: {fileID: 341879177}
 --- !u!4 &48846683
 Transform:
   m_ObjectHideFlags: 0
@@ -784,8 +784,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aef924a3a99d62b469e39a059442b14d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  backgroundMusic: {fileID: 8300000, guid: 0f43a8795be68164ea8f7d57e9d6fc1f, type: 3}
-  victoryMusic: {fileID: 0}
+  backgroundMusic: {fileID: 8300000, guid: d22969a1e7c5a254c9f4c9f89e90cea0, type: 3}
+  victoryMusic: {fileID: 8300000, guid: bf4890a1c6569ed45aea8fd339f121b5, type: 3}
+  defeatMusic: {fileID: 8300000, guid: 3de86e5ac64247d44895e533c0e8144d, type: 3}
 --- !u!4 &341879178
 Transform:
   m_ObjectHideFlags: 0

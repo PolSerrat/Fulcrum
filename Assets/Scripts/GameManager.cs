@@ -1,4 +1,4 @@
-using UnityEditor;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,7 +9,6 @@ public class GameManager : MonoBehaviour
     public HeavyBall ball;
     public AudioManager audioManager;
 
-    [Header("Game State")]
     private bool gameOver = false;
     private bool gameWon = false;
     private Quaternion initialBallRotation;
@@ -23,38 +22,6 @@ public class GameManager : MonoBehaviour
         }
 
         initialBallRotation = ball.transform.rotation;
-        //ResetGame();
-    }
-
-    public void ResetGame()
-    {
-        gameOver = false;
-        gameWon = false;
-        Time.timeScale = 1f; // Reanudar el juego si estaba pausado
-
-        // Colocar la bola en el Initial Point
-        ball.transform.position = initialPoint.GetSpawnPosition();
-        ball.transform.rotation = initialBallRotation;
-
-        // Resetear velocidad
-        Rigidbody rb = ball.GetComponent<Rigidbody>();
-        if (rb != null)
-        {
-            rb.linearVelocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
-        }
-
-        // Reanudar música
-        if (audioManager != null)
-        {
-            audioManager.ResumeMusic();
-        }
-
-        Debug.Log("═══════════════════════════════════");
-        Debug.Log("      JUEGO INICIADO");
-        Debug.Log("═══════════════════════════════════");
-
-        SceneManager.LoadScene("Menu"); // Reiniciar la escena actual
     }
 
     public void GameWon()
@@ -64,25 +31,67 @@ public class GameManager : MonoBehaviour
         gameOver = true;
         gameWon = true;
 
-        Debug.Log("╔════════════════════╗");
-        Debug.Log("║   ¡¡¡GANASTE!!!   ║");
-        Debug.Log("╚════════════════════╝");
+        Debug.Log("¡¡¡GANASTE!!!");
 
-        // Tocar música de victoria
+        Time.timeScale = 0f;
+
         if (audioManager != null)
         {
             audioManager.PlayVictoryMusic();
         }
 
-        // Pausar el juego
-        //Time.timeScale = 0f;
+        StartCoroutine(ResetAfterDelay());
+    }
+
+    public void GameLost()
+    {
+        if (gameOver) return;
+
+        gameOver = true;
+
+        Debug.Log("PERDISTE");
+
+        Time.timeScale = 0f;
+
+        if (audioManager != null)
+        {
+            audioManager.PlayDefeatMusic();
+        }
+
+        StartCoroutine(ResetAfterDelay());
+    }
+
+    private IEnumerator ResetAfterDelay()
+    {
+        // IMPORTANTE: usar unscaled time porque timeScale = 0
+        yield return new WaitForSecondsRealtime(10f);
 
         ResetGame();
+    }
 
-        // Colocar la bola en el Initial Point
-        //ball.transform.position = initialPoint.GetSpawnPosition();
-        //ball.transform.rotation = initialBallRotation;
+    public void ResetGame()
+    {
+        gameOver = false;
+        gameWon = false;
 
+        Time.timeScale = 1f;
+
+        ball.transform.position = initialPoint.GetSpawnPosition();
+        ball.transform.rotation = initialBallRotation;
+
+        Rigidbody rb = ball.GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+        }
+
+        if (audioManager != null)
+        {
+            audioManager.ResumeMusic();
+        }
+
+        Debug.Log("Juego reiniciado");
     }
 
     public bool IsGameOver() => gameOver;

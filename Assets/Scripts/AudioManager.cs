@@ -2,77 +2,85 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    [Header("Background Music")]
+    [Header("Music Clips")]
     public AudioClip backgroundMusic;
-
-    [Header("Victory Music")]
     public AudioClip victoryMusic;
-    
-    private AudioSource audioSource;
+    public AudioClip defeatMusic;
+
+    private AudioSource musicSource;
 
     void Start()
     {
-        // Crear un AudioSource si no existe
-        audioSource = GetComponent<AudioSource>();
-        if (audioSource == null)
+        // Crear AudioSource para m�sica
+        musicSource = GetComponent<AudioSource>();
+
+        if (musicSource == null)
         {
-            audioSource = gameObject.AddComponent<AudioSource>();
+            musicSource = gameObject.AddComponent<AudioSource>();
         }
 
-        // Configurar el AudioSource
-        if (backgroundMusic != null)
-        {
-            audioSource.clip = backgroundMusic;
-            audioSource.loop = true;
-            audioSource.Play();
-            Debug.Log("Música de fondo iniciada");
-        }
-        else
-        {
-            Debug.LogWarning("AudioManager: Background Music no está asignado en el Inspector");
-        }
+        PlayBackgroundMusic();
     }
 
-    // Se llama desde GameManager cuando ganas
+    void PlayBackgroundMusic()
+    {
+        if (backgroundMusic == null)
+        {
+            Debug.LogWarning("Background music missing");
+            return;
+        }
+
+        musicSource.clip = backgroundMusic;
+        musicSource.loop = true;
+        musicSource.Play();
+
+        Debug.Log("Background music started");
+    }
+
     public void PlayVictoryMusic()
     {
-        if (audioSource == null) return;
-
-        if (audioSource.isPlaying)
+        if (victoryMusic == null)
         {
-            audioSource.Stop();
+            Debug.LogWarning("Victory music missing");
+            return;
         }
 
-        if (victoryMusic != null)
-        {
-            audioSource.clip = victoryMusic;
-            audioSource.loop = false;
-            audioSource.Play();
-            Debug.Log("Música de victoria iniciada");
-        }
-        else
-        {
-            Debug.LogWarning("AudioManager: Victory Music no está asignado en el Inspector");
-        }
+        musicSource.Stop();
+
+        musicSource.clip = victoryMusic;
+        musicSource.loop = false;
+        musicSource.Play();
+
+        Debug.Log("Victory music started");
     }
 
-    // Opcional: pausar música sin detenerla completamente
+    public void PlayDefeatMusic()
+    {
+        if (defeatMusic == null)
+        {
+            Debug.LogWarning("Defeat music missing");
+            return;
+        }
+
+        musicSource.Stop();
+
+        musicSource.clip = defeatMusic;
+        musicSource.loop = false;
+        musicSource.Play();
+
+        Debug.Log("Defeat music started");
+    }
+
     public void PauseMusic()
     {
-        if (audioSource != null && audioSource.isPlaying)
+        if (musicSource.isPlaying)
         {
-            audioSource.Pause();
+            musicSource.Pause();
         }
     }
 
-    // Opcional: reanudar música
     public void ResumeMusic()
     {
-        if (audioSource != null && !audioSource.isPlaying)
-        {
-            audioSource.clip = backgroundMusic;
-            audioSource.loop = true;
-            audioSource.Play();
-        }
+        musicSource.UnPause();
     }
 }
