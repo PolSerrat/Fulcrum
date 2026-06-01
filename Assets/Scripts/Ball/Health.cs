@@ -31,7 +31,10 @@ public class Health : MonoBehaviour
     private Color originalColor;
     private Coroutine flashRoutine;
 
-    void Start()
+	[Header("Game Manager")]            
+	public GameManager gameManager;
+
+	void Start()
     {
         if (SceneManager.GetActiveScene().name == "Menu")
         {
@@ -62,7 +65,11 @@ public class Health : MonoBehaviour
             // If the ball is Blue in the Normal level, it remembers Blue.
             originalColor = ballRenderer.material.color;
         }
-    }
+
+		if (gameManager == null) {
+			gameManager = FindFirstObjectByType<GameManager>();
+		}
+	}
 
     void OnCollisionEnter(Collision collision)
     {
@@ -100,8 +107,15 @@ public class Health : MonoBehaviour
         if (currentLives <= 0)
         {
             Debug.Log("Out of lives! Game Over.");
-            SceneManager.LoadScene("Menu");
-        }
+			Debug.Log("Out of lives! Game Over.");
+
+			if (gameManager != null)                           
+				gameManager.GameLost("lives");              
+			else                                             
+				SceneManager.LoadScene("Menu");                // fallback
+
+			return;
+		}
 
         if (ballRenderer != null)
         {
