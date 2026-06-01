@@ -22,6 +22,13 @@ public class DualCylinderManager : MonoBehaviour
         {
             currentTimer += Time.deltaTime;
 
+            //Calculate how close we are to teleporting (0.0 to 1.0)
+            float chargePercentage = currentTimer / requiredTime;
+
+            //Tell both pads to update their glowing color
+            cylinderPad1.UpdateGlow(chargePercentage);
+            cylinderPad2.UpdateGlow(chargePercentage);
+
             if (currentTimer >= requiredTime)
             {
                 // Reset the pads so the timer doesn't trigger multiple times
@@ -33,6 +40,9 @@ public class DualCylinderManager : MonoBehaviour
                 {
                     Debug.LogWarning("Level locked! You haven't typed a scene name in the Inspector yet.");
                     currentTimer = 0f; // Reset timer so it doesn't spam the console
+                    // Reset the glow if the level is locked
+                    cylinderPad1.UpdateGlow(0f);
+                    cylinderPad2.UpdateGlow(0f);
                     return; // Stop the code right here so it doesn't try to load
                 }
 
@@ -44,6 +54,10 @@ public class DualCylinderManager : MonoBehaviour
         {
             // Reset timer if someone steps off
             currentTimer = 0f;
+
+            // Ensure the glow resets when players step off
+            cylinderPad1.UpdateGlow(0f);
+            cylinderPad2.UpdateGlow(0f);
         }
     }
 }
