@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using System.Collections;
 
 public class Health : MonoBehaviour
 {
@@ -19,6 +20,16 @@ public class Health : MonoBehaviour
 
     [Header("UI Settings")]
     public TextMeshProUGUI healthText;
+
+    [Header("Visual Effects")]
+    [Tooltip("The color the ball turns when it takes damage")]
+    public Color damageFlashColor = Color.white;
+    [Tooltip("How long the flash lasts in seconds")]
+    public float flashDuration = 0.15f;
+
+    private MeshRenderer ballRenderer;
+    private Color originalColor;
+    private Coroutine flashRoutine;
 
     void Start()
     {
@@ -41,6 +52,15 @@ public class Health : MonoBehaviour
         else
         {
             Debug.LogError("I couldn't find the text! Make sure it is named exactly 'HealthText'.");
+        }
+
+        ballRenderer = GetComponent<MeshRenderer>();
+
+        if (ballRenderer != null)
+        {
+            // This is the magic part: It automatically saves the starting color!
+            // If the ball is Blue in the Normal level, it remembers Blue.
+            originalColor = ballRenderer.material.color;
         }
     }
 
@@ -82,6 +102,17 @@ public class Health : MonoBehaviour
             Debug.Log("Out of lives! Game Over.");
             SceneManager.LoadScene("Menu");
         }
+
+        if (ballRenderer != null)
+        {
+            // If it's already flashing from a previous hit, stop it so we can restart the flash
+            if (flashRoutine != null)
+            {
+                StopCoroutine(flashRoutine);
+            }
+            // Start the new flash timer
+            flashRoutine = StartCoroutine(DamageFlash());
+        }
     }
 
     void UpdateHealthUI()
@@ -90,5 +121,17 @@ public class Health : MonoBehaviour
         {
             healthText.text = "Lives: " + currentLives;
         }
+    }
+
+    private IEnumerator DamageFlash()
+    {
+        // 1. Instantly change to the bright flash color
+        ballRenderer.material.color = damageFlashColor;
+
+        // 2. Wait for a tiny fraction of a second
+        yield return new WaitForSeconds(flashDuration);
+
+        // 3. Revert exactly back to the saved color (Purple, Green, Blue, or Red)
+        ballRenderer.material.color = originalColor;
     }
 }
