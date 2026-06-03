@@ -4,119 +4,107 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-	[Header("References")]
-	public InitialPoint initialPoint;
-	public HeavyBall ball;
-	public AudioManager audioManager;
+    [Header("References")]
+    public InitialPoint initialPoint;
+    public HeavyBall ball;
+    public AudioManager audioManager;
 
-	[Header("UI")]                             
-	public GameOverUI gameOverUI;               
-	public GameTimer gameTimer;                 
+    private bool gameOver = false;
+    private bool gameWon = false;
+    private Quaternion initialBallRotation;
 
-	private bool gameOver = false;
-	private bool gameWon = false;
-	private Quaternion initialBallRotation;
+    void Start()
+    {
+        if (ball == null || initialPoint == null)
+        {
+            Debug.LogError("GameManager: Ball o InitialPoint no están asignados");
+            return;
+        }
 
-	void Start()
-	{
-		if (ball == null || initialPoint == null)
-		{
-			Debug.LogError("GameManager: Ball o InitialPoint no están asignados");
-			return;
-		}
+        initialBallRotation = ball.transform.rotation;
+    }
 
-		initialBallRotation = ball.transform.rotation;
+    public void loseLife()
+    {
+        if (gameOver) return;
+        Debug.Log("¡Has perdido una vida!");
+        if (audioManager != null)
+        {
+            audioManager.PlayLoseLifeSound();
+        }
+    }
 
-		if (gameOverUI == null)
-			gameOverUI = FindFirstObjectByType<GameOverUI>();
-		if (gameTimer == null)
-			gameTimer = FindFirstObjectByType<GameTimer>();
-	}
+    public void GameWon()
+    {
+        if (gameOver) return;
 
-	public void loseLife()
-	{
-		if (gameOver) return;
-		Debug.Log("¡Has perdido una vida!");
-		if (audioManager != null)
-			audioManager.PlayLoseLifeSound();
-	}
+        gameOver = true;
+        gameWon = true;
 
-	public void GameWon()
-	{
-		if (gameOver) return;
+        Debug.Log("¡¡¡GANASTE!!!");
 
-		gameOver = true;
-		gameWon = true;
-		Debug.Log("¡¡¡GANASTE!!!");
-		Time.timeScale = 0f;
+        Time.timeScale = 0f;
 
-		if (gameTimer != null)                        
-			gameTimer.StopTimer();                     
+        if (audioManager != null)
+        {
+            audioManager.PlayVictoryMusic();
+        }
 
-		if (audioManager != null)
-			audioManager.PlayVictoryMusic();
+        StartCoroutine(ResetAfterDelay());
+    }
 
-		if (gameOverUI != null)                         
-		{                                              
-			float timeLeft = gameTimer != null          
-				? gameTimer.TimeRemaining : 0f;        
-			gameOverUI.ShowVictoryScreen(timeLeft);    
-		}                                             
-		else                                           
-			StartCoroutine(ResetAfterDelay());          
-	}
+    public void GameLost()
+    {
+        if (gameOver) return;
 
-	public void GameLost(string reason = "lives")       
-	{
-		if (gameOver) return;
+        gameOver = true;
 
-		gameOver = true;
-		Debug.Log("PERDISTE — Razón: " + reason);
-		Time.timeScale = 0f;
+        Debug.Log("PERDISTE");
 
-		if (audioManager != null)
-			audioManager.PlayDefeatMusic();
+        Time.timeScale = 0f;
 
-		if (gameOverUI != null)                       
-			gameOverUI.ShowDefeatScreen(reason);        
-		else                                          
-			StartCoroutine(ResetAfterDelay());          
-	}
+        if (audioManager != null)
+        {
+            audioManager.PlayDefeatMusic();
+        }
 
-	// Keep old no-argument version so FinalPoint still works
-	public void GameLost()
-	{
-		GameLost("lives");
-	}
+        StartCoroutine(ResetAfterDelay());
+    }
 
-	private IEnumerator ResetAfterDelay()
-	{
-		yield return new WaitForSecondsRealtime(10f);
-		ResetGame();
-	}
+    private IEnumerator ResetAfterDelay()
+    {
+        
+        yield return new WaitForSecondsRealtime(10f);
 
-	public void ResetGame()
-	{
-		gameOver = false;
-		gameWon = false;
-		Time.timeScale = 1f;
+        ResetGame();
+    }
 
-		ball.transform.position = initialPoint.GetSpawnPosition();
-		ball.transform.rotation = initialBallRotation;
+    public void ResetGame()
+    {
+        gameOver = false;
+        gameWon = false;
 
-		Rigidbody rb = ball.GetComponent<Rigidbody>();
-		if (rb != null)
-		{
-			rb.linearVelocity = Vector3.zero;
-			rb.angularVelocity = Vector3.zero;
-		}
+        Time.timeScale = 1f;
 
-		if (audioManager != null)
-			audioManager.ResumeMusic();
+        ball.transform.position = initialPoint.GetSpawnPosition();
+        ball.transform.rotation = initialBallRotation;
 
-		SceneManager.LoadScene("Menu");
-	}
+        Rigidbody rb = ball.GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+        }
 
-	public bool IsGameOver() => gameOver;
-	public bool IsGameWon() => gameWon;
+        if (audioManager != null)
+        {
+            audioManager.ResumeMusic();
+        }
+
+        SceneManager.LoadScene("Menu"); // Reiniciar la escena actual
+        Debug.Log("Juego reiniciado");
+    }
+
+    public bool IsGameOver() => gameOver;
+    public bool IsGameWon() => gameWon;
 }

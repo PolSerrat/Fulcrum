@@ -26,8 +26,8 @@ public class GameTimer : MonoBehaviour
 	[Tooltip("Hook up anything here: show a panel, play a sound, call a GameManager method, etc.")]
 	public UnityEvent onTimeUp;
 
-	[Header("Game Manager")]                                    
-	public GameManager gameManager;
+	[Tooltip("Optional: scene to load when time runs out. Leave empty to do nothing here.")]
+	public string sceneToLoadOnTimeUp = "Menu";
 
 	// --- internal state ---
 	private float timeRemaining;
@@ -41,10 +41,6 @@ public class GameTimer : MonoBehaviour
 
 	void Start()
 	{
-		if (gameManager == null) {
-			gameManager = FindFirstObjectByType<GameManager>();
-		}
-			
 		timeRemaining = timeLimit;
 		UpdateDisplay();
 
@@ -117,17 +113,18 @@ public class GameTimer : MonoBehaviour
 
 	private void TimeUp()
 	{
-		if (hasFinished) return;
+		if (hasFinished) return;   // safety: make sure this only runs once
 		hasFinished = true;
 		isRunning = false;
 
 		Debug.Log("GameTimer: time is up - finishing the round.");
+
+		// 1. Tell anything wired in the Inspector that time ran out.
 		onTimeUp?.Invoke();
 
-		if (gameManager != null)                               
-			gameManager.GameLost("time");                     
-		else                                                  
-			SceneManager.LoadScene("Menu");                  
+		// 2. Optionally load a scene as well.
+		if (!string.IsNullOrEmpty(sceneToLoadOnTimeUp))
+			SceneManager.LoadScene(sceneToLoadOnTimeUp);
 	}
 
 	private void UpdateDisplay()
