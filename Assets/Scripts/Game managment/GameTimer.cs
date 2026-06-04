@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.SceneManagement;
 using TMPro;
 
 public class GameTimer : MonoBehaviour
@@ -23,11 +22,12 @@ public class GameTimer : MonoBehaviour
 	public Color warningColor = Color.red;
 
 	[Header("What happens when time runs out")]
-	[Tooltip("Hook up anything here: show a panel, play a sound, call a GameManager method, etc.")]
+	[Tooltip("Optional extra hooks (panel, sound, etc.). The freeze + defeat screen itself is handled by the GameManager below.")]
 	public UnityEvent onTimeUp;
 
-	[Tooltip("Optional: scene to load when time runs out. Leave empty to do nothing here.")]
-	public string sceneToLoadOnTimeUp = "Menu";
+	[Header("Game Manager Reference")]
+	[Tooltip("Optional - found automatically if left empty. Running out of time calls GameManager.GameLost().")]
+	public GameManager gameManager;
 
 	// --- internal state ---
 	private float timeRemaining;
@@ -41,6 +41,12 @@ public class GameTimer : MonoBehaviour
 
 	void Start()
 	{
+		// Find the GameManager so time-up can trigger the shared defeat screen.
+		if (gameManager == null)
+		{
+			gameManager = FindFirstObjectByType<GameManager>();
+		}
+
 		timeRemaining = timeLimit;
 		UpdateDisplay();
 
@@ -113,18 +119,18 @@ public class GameTimer : MonoBehaviour
 
 	private void TimeUp()
 	{
-		if (hasFinished) return;   // safety: make sure this only runs once
+		if (hasFinished) return;
 		hasFinished = true;
 		isRunning = false;
 
 		Debug.Log("GameTimer: time is up - finishing the round.");
 
-		// 1. Tell anything wired in the Inspector that time ran out.
 		onTimeUp?.Invoke();
 
-		// 2. Optionally load a scene as well.
-		if (!string.IsNullOrEmpty(sceneToLoadOnTimeUp))
-			SceneManager.LoadScene(sceneToLoadOnTimeUp);
+		if (gameManager != null)
+		{
+			gameManager.GameLost();
+		}
 	}
 
 	private void UpdateDisplay()

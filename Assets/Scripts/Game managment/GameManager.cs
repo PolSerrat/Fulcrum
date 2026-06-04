@@ -4,107 +4,97 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    [Header("References")]
-    public InitialPoint initialPoint;
-    public HeavyBall ball;
-    public AudioManager audioManager;
+	[Header("References")]
+	public AudioManager audioManager;
 
-    private bool gameOver = false;
-    private bool gameWon = false;
-    private Quaternion initialBallRotation;
+	[Header("End-of-game UI")]
+	[Tooltip("Object shown for the whole end screen when the player WINS")]
+	public GameObject winText;
 
-    void Start()
-    {
-        if (ball == null || initialPoint == null)
-        {
-            Debug.LogError("GameManager: Ball o InitialPoint no están asignados");
-            return;
-        }
+	[Tooltip("Object shown for the whole end screen when the player LOSES")]
+	public GameObject defeatText;
 
-        initialBallRotation = ball.transform.rotation;
-    }
+	[Header("End screen settings")]
+	[Tooltip("How many seconds the win/defeat screen stays frozen on screen before the Menu loads.")]
+	public float endScreenDuration = 10f;
 
-    public void loseLife()
-    {
-        if (gameOver) return;
-        Debug.Log("¡Has perdido una vida!");
-        if (audioManager != null)
-        {
-            audioManager.PlayLoseLifeSound();
-        }
-    }
+	[Tooltip("Name of the scene to load after the end screen.")]
+	public string menuSceneName = "Menu";
 
-    public void GameWon()
-    {
-        if (gameOver) return;
+	private bool gameOver = false;
+	private bool gameWon = false;
 
-        gameOver = true;
-        gameWon = true;
+	void Start()
+	{
+		// Make sure both messages start hidden, no matter how they were left in the editor.
+		if (winText != null) winText.SetActive(false);
+		if (defeatText != null) defeatText.SetActive(false);
+	}
 
-        Debug.Log("¡¡¡GANASTE!!!");
+	public void loseLife()
+	{
+		if (gameOver) return;
 
-        Time.timeScale = 0f;
+		Debug.Log("¡Has perdido una vida!");
 
-        if (audioManager != null)
-        {
-            audioManager.PlayVictoryMusic();
-        }
+		if (audioManager != null)
+		{
+			audioManager.PlayLoseLifeSound();
+		}
+	}
 
-        StartCoroutine(ResetAfterDelay());
-    }
+	public void GameWon()
+	{
+		if (gameOver) return;
 
-    public void GameLost()
-    {
-        if (gameOver) return;
+		gameOver = true;
+		gameWon = true;
 
-        gameOver = true;
+		Debug.Log("¡¡¡GANASTE!!!");
 
-        Debug.Log("PERDISTE");
+		// Show the WIN message, then freeze the game.
+		if (winText != null) winText.SetActive(true);
+		Time.timeScale = 0f;
 
-        Time.timeScale = 0f;
+		if (audioManager != null)
+		{
+			audioManager.PlayVictoryMusic();
+		}
 
-        if (audioManager != null)
-        {
-            audioManager.PlayDefeatMusic();
-        }
+		StartCoroutine(EndScreenThenMenu());
+	}
 
-        StartCoroutine(ResetAfterDelay());
-    }
+	public void GameLost()
+	{
+		if (gameOver) return;
 
-    private IEnumerator ResetAfterDelay()
-    {
-        
-        yield return new WaitForSecondsRealtime(10f);
+		gameOver = true;
 
-        ResetGame();
-    }
+		Debug.Log("PERDISTE");
 
-    public void ResetGame()
-    {
-        gameOver = false;
-        gameWon = false;
+		// Show the DEFEAT message, then freeze the game.
+		if (defeatText != null) defeatText.SetActive(true);
+		Time.timeScale = 0f;
 
-        Time.timeScale = 1f;
+		if (audioManager != null)
+		{
+			audioManager.PlayDefeatMusic();
+		}
 
-        ball.transform.position = initialPoint.GetSpawnPosition();
-        ball.transform.rotation = initialBallRotation;
+		StartCoroutine(EndScreenThenMenu());
+	}
 
-        Rigidbody rb = ball.GetComponent<Rigidbody>();
-        if (rb != null)
-        {
-            rb.linearVelocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
-        }
+	// Shared by win AND lose: hold the frozen message on screen, then go to the Menu.
+	private IEnumerator EndScreenThenMenu()
+	{
+		// Realtime wait: it keeps counting even though Time.timeScale is 0 (game frozen).
+		yield return new WaitForSecondsRealtime(endScreenDuration);
 
-        if (audioManager != null)
-        {
-            audioManager.ResumeMusic();
-        }
+		Time.timeScale = 1f;
 
-        SceneManager.LoadScene("Menu"); // Reiniciar la escena actual
-        Debug.Log("Juego reiniciado");
-    }
+		SceneManager.LoadScene(menuSceneName);
+	}
 
-    public bool IsGameOver() => gameOver;
-    public bool IsGameWon() => gameWon;
+	public bool IsGameOver() => gameOver;
+	public bool IsGameWon() => gameWon;
 }
