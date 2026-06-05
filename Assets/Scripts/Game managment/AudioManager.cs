@@ -79,7 +79,10 @@ public class AudioManager : MonoBehaviour
             Debug.LogWarning("Lose life sound missing");
             return;
         }
-        AudioSource.PlayClipAtPoint(loseLife, Camera.main.transform.position);
+
+        // Instead of looking for a camera, just play the sound exactly where the AudioManager is!
+        musicSource.PlayOneShot(loseLife);
+
         Debug.Log("Lose life sound played");
     }
 

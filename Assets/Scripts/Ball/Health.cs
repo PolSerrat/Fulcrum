@@ -73,7 +73,9 @@ public class Health : MonoBehaviour
 
 	void OnCollisionEnter(Collision collision)
 	{
-		if (SceneManager.GetActiveScene().name == "Menu")
+        Debug.Log("The ball physically touched: " + collision.gameObject.name + " with a force of: " + collision.relativeVelocity.magnitude);
+
+        if (SceneManager.GetActiveScene().name == "Menu")
 		{
 			return;
 		}
