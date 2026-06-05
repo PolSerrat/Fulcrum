@@ -96,8 +96,14 @@ public class Health : MonoBehaviour
 	{
 		currentLives--;
 
-		// Record the exact time this crash happened to trigger the grace period.
-		lastCrashTime = Time.time;
+		// Añadimos el sonido de perder vidas
+        if (gameManager != null)
+        {
+            gameManager.loseLife();
+        }
+
+        // Record the exact time this crash happened to trigger the grace period.
+        lastCrashTime = Time.time;
 
 		Debug.Log("CRASH! Impact force was: " + force + ". Lives left: " + currentLives);
 
