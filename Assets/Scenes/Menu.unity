@@ -148,9 +148,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 045acd963ac76754ba46491416441d5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialPoint: {fileID: 1354036973}
-  ball: {fileID: 0}
   audioManager: {fileID: 0}
+  winText: {fileID: 0}
+  defeatText: {fileID: 0}
+  endScreenDuration: 10
+  menuSceneName: Menu
 --- !u!4 &48846683
 Transform:
   m_ObjectHideFlags: 0
@@ -1042,7 +1044,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aef924a3a99d62b469e39a059442b14d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  backgroundMusic: {fileID: 8300000, guid: 0f43a8795be68164ea8f7d57e9d6fc1f, type: 3}
+  backgroundMusic: {fileID: 8300000, guid: 389ae4a860a336f4eb82d41d14684bed, type: 3}
   victoryMusic: {fileID: 0}
   defeatMusic: {fileID: 0}
   loseLife: {fileID: 0}
